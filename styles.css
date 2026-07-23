@@ -69,15 +69,22 @@ body {
 /* Header */
 .main-header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 28px;
-    background: rgba(15, 23, 42, 0.8);
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 24px;
+    background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     box-shadow: var(--shadow-card);
+}
+
+.header-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .header-left .logo {
@@ -162,7 +169,11 @@ body {
 .header-actions {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
 }
 
 /* Buttons */
@@ -489,8 +500,8 @@ body {
 /* Stock Grid & Cards */
 .stock-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
 }
 
 .stock-card {
@@ -500,7 +511,8 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    height: 100%;
+    min-height: 420px;
     transition: var(--transition);
     position: relative;
     backdrop-filter: blur(10px);
@@ -517,7 +529,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 12px;
+    height: 28px;
+    margin-bottom: 8px;
 }
 
 .market-badge {
@@ -540,10 +553,16 @@ body {
     box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
 
+.stock-title-box {
+    min-height: 52px;
+    margin-bottom: 8px;
+}
+
 .stock-title-box h3 {
     font-size: 20px;
     font-weight: 800;
     color: white;
+    line-height: 1.25;
 }
 
 .ticker-code {
@@ -559,10 +578,11 @@ body {
 }
 
 .price-row {
+    height: 38px;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 8px;
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
 .price-val {
@@ -581,14 +601,15 @@ body {
 
 /* Fair Value Box */
 .fair-value-box {
+    height: 48px;
     background: rgba(16, 185, 129, 0.08);
     border: 1px solid rgba(16, 185, 129, 0.2);
     border-radius: var(--radius-md);
-    padding: 10px 14px;
+    padding: 8px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .fair-label {
@@ -614,13 +635,15 @@ body {
 
 /* Metrics Grid */
 .card-metrics-grid {
+    height: 56px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    align-items: center;
     gap: 8px;
     background: rgba(0, 0, 0, 0.25);
-    padding: 10px;
+    padding: 8px;
     border-radius: var(--radius-md);
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .metric-item {
@@ -644,8 +667,14 @@ body {
 .card-desc {
     font-size: 12px;
     color: var(--text-muted);
-    line-height: 1.4;
-    margin-bottom: 16px;
+    line-height: 1.45;
+    height: 36px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
 
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -940,100 +969,140 @@ body {
 }
 
 /* ==========================================================================
-   Mobile-First High Contrast & Large Touch Target Responsive System
+   Mobile-First High Contrast & Smartphone Touch Responsive System
    ========================================================================== */
 @media (max-width: 768px) {
     body {
         font-size: 15px;
+        background-color: #080c14;
     }
 
     .app-container {
         padding: 10px 8px;
     }
 
-    /* Header Mobile Optimization */
+    /* Sticky Mobile App Header */
     .main-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
-        padding: 14px;
+        padding: 14px 12px;
+        background: rgba(11, 15, 25, 0.94);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        border-radius: var(--radius-md);
+        margin-bottom: 14px;
+    }
+
+    .header-top-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
     }
 
     .logo-text h1 {
-        font-size: 20px;
+        font-size: 21px;
         font-weight: 800;
+        color: #ffffff;
     }
     
     .logo-text .subtitle {
         font-size: 12px;
         color: #cbd5e1;
+        font-weight: 500;
     }
 
+    /* Mobile Header Stats Ribbon */
     .header-stats {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+        gap: 6px;
         width: 100%;
     }
 
     .stat-pill {
-        padding: 8px 10px;
+        padding: 8px 6px;
         flex-direction: column;
         text-align: center;
-        gap: 4px;
+        gap: 2px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
     }
 
     .stat-value {
-        font-size: 15px;
+        font-size: 14px;
+        font-weight: 800;
     }
 
     .stat-label {
-        font-size: 11px;
+        font-size: 10px;
         color: #cbd5e1;
+        font-weight: 600;
     }
 
+    /* Mobile Header Quick Actions Grid */
     .header-actions {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 8px;
         width: 100%;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .header-actions .btn {
         width: 100%;
         justify-content: center;
-        padding: 12px 14px;
-        font-size: 14px;
+        padding: 12px 10px;
+        font-size: 13px;
         font-weight: 700;
+        border-radius: 10px;
     }
 
-    /* Ribbon Cards Mobile */
+    .header-actions #btnPresetNasdaq {
+        grid-column: span 2;
+        font-size: 15px;
+        padding: 13px;
+    }
+
+    /* Mobile Market Ribbon Cards */
     .market-ribbon {
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
+        margin-bottom: 14px;
     }
 
     .ribbon-card {
         padding: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .r-country { font-size: 12px; color: #e2e8f0; }
-    .r-val { font-size: 15px; }
+    .r-country { font-size: 12px; color: #cbd5e1; font-weight: 600; }
+    .r-val { font-size: 15px; color: #ffffff; }
 
-    /* Main Layout */
+    /* Main Layout for Mobile */
     .main-layout {
         flex-direction: column;
-        gap: 16px;
+        gap: 14px;
     }
 
     .filter-panel {
         width: 100%;
-        padding: 16px 14px;
+        padding: 16px 12px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .filter-group label {
         font-size: 14px;
-        color: #e2e8f0;
+        color: #f1f5f9;
+        font-weight: 700;
     }
 
     .m-pill, .t-pill {
@@ -1042,29 +1111,45 @@ body {
         font-weight: 700;
     }
 
-    /* Stock Card Mobile Optimization */
+    /* Stock Card Mobile Touch UI */
     .stock-grid {
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 16px;
     }
 
     .stock-card {
-        padding: 16px 14px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: rgba(15, 23, 42, 0.96);
+        padding: 18px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(15, 23, 42, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .stock-card-header {
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .stock-title-box {
+        min-height: auto;
+        margin-bottom: 10px;
     }
 
     .stock-title-box h3 {
-        font-size: 20px;
+        font-size: 21px;
         font-weight: 800;
+        color: #ffffff;
+        letter-spacing: -0.3px;
     }
 
     .ticker-code {
         font-size: 13px;
-        font-weight: 600;
+        font-weight: 700;
+        color: #38bdf8;
     }
 
     .price-row {
+        height: auto;
         margin: 10px 0;
         flex-direction: column;
         align-items: flex-start;
@@ -1074,6 +1159,7 @@ body {
     .price-val {
         font-size: 24px;
         font-weight: 800;
+        color: #ffffff;
     }
 
     .krw-sub {
@@ -1086,34 +1172,44 @@ body {
     }
 
     .fair-value-box {
+        height: auto;
         padding: 12px;
         flex-direction: column;
         align-items: flex-start;
         gap: 6px;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 12px;
     }
 
     .fair-label {
         font-size: 12px;
         color: #cbd5e1;
+        font-weight: 600;
     }
 
     .fair-price {
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 800;
+        color: #ffffff;
     }
 
     .upside-pill {
         font-size: 13px;
+        font-weight: 800;
         padding: 4px 12px;
         align-self: flex-start;
     }
 
     /* 2x2 Metrics Grid on Mobile */
     .card-metrics-grid {
+        height: auto;
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
         padding: 12px;
         background: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .m-label {
@@ -1125,21 +1221,25 @@ body {
     .m-val {
         font-size: 15px;
         font-weight: 800;
+        color: #ffffff;
     }
 
     .card-desc {
         font-size: 13px;
-        color: #f1f5f9;
+        color: #e2e8f0;
         line-height: 1.5;
+        height: auto;
         margin-bottom: 14px;
         -webkit-line-clamp: 3;
     }
 
-    /* Card Footer Mobile Button Grid */
+    /* Card Footer Mobile Button Grid (2x2 Touch Buttons) */
     .card-footer {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 8px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .card-footer .btn {
@@ -1151,18 +1251,39 @@ body {
         justify-content: center;
     }
 
+    .card-footer .btn-naver {
+        background: #03c75a;
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 14px;
+    }
+
     .card-footer .btn-secondary {
         grid-column: span 2;
     }
 
-    /* Modals Mobile */
+    /* Modals Mobile Touch View */
     .modal-backdrop {
         padding: 10px;
     }
 
     .modal-content {
-        padding: 18px 14px;
+        padding: 20px 14px;
         max-height: 94vh;
+        border-radius: 20px;
+    }
+
+    .modal-close {
+        top: 16px;
+        right: 16px;
+        font-size: 24px;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
     }
 
     .kpi-grid {
@@ -1199,8 +1320,9 @@ body {
 
     .modal-footer .btn {
         width: 100%;
-        padding: 12px;
+        padding: 13px;
         font-size: 14px;
         justify-content: center;
+        border-radius: 12px;
     }
 }
