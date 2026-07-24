@@ -533,21 +533,15 @@ function toggleIphoneFrame() {
   }, 300);
 }
 
-// Tab Switcher
-function switchTab(tabId) {
-  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+// Smooth Anchor Scroll Navigation for Continuous Vertical Stream
+function scrollToSection(secId) {
+  const el = document.getElementById(secId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
 
-  const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
-  if (activeBtn) activeBtn.classList.add('active');
-
-  const activeTab = document.getElementById(tabId);
-  if (activeTab) activeTab.classList.add('active');
-
-  if (tabId === 'tab-investment') {
-    setTimeout(renderInvestmentAnalysis, 100);
-  } else if (tabId === 'tab-regions') {
-    setTimeout(() => renderRegionalChart(getCurrentlyFilteredData()), 100);
+    document.querySelectorAll('.anchor-btn').forEach(btn => btn.classList.remove('active'));
+    const clickedBtn = Array.from(document.querySelectorAll('.anchor-btn')).find(b => b.getAttribute('onclick').includes(secId));
+    if (clickedBtn) clickedBtn.classList.add('active');
   }
 }
 
@@ -724,7 +718,7 @@ function populateRegionDropdowns(regions) {
 function selectRegionForAnalysis(regionId) {
   const select = document.getElementById('investRegionSelect');
   if (select) select.value = regionId;
-  switchTab('tab-investment');
+  scrollToSection('sec-investment');
   renderInvestmentAnalysis();
 }
 
