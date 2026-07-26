@@ -1,0 +1,14 @@
+{
+  "name": "korea-realestate-analytics",
+  "version": "1.0.0",
+  "description": "대한민국 부동산 지역별 실시간 매매동향 및 토지·건물 투자가치, 임대수익률, 대출 조건 심층 분석 프로그램",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}
