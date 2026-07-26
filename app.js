@@ -3499,6 +3499,54 @@ function initEventListeners() {
         });
     });
 
+    // Mobile Bottom Navigation Bar Events
+    const navItems = document.querySelectorAll('.mobile-bottom-nav .nav-item');
+    const setNavActive = (id) => {
+        navItems.forEach(item => item.classList.remove('active'));
+        const activeElem = document.getElementById(id);
+        if (activeElem) activeElem.classList.add('active');
+    };
+
+    const navHome = document.getElementById('navHome');
+    const navNasdaq = document.getElementById('navNasdaq');
+    const navYeongjae = document.getElementById('navYeongjae');
+    const navCalc = document.getElementById('navCalc');
+    const navSaved = document.getElementById('navSaved');
+
+    if (navHome) navHome.addEventListener('click', () => {
+        setNavActive('navHome');
+        appState.filters.market = 'all';
+        appState.filters.tag = 'all';
+        renderMainGrid();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    if (navNasdaq) navNasdaq.addEventListener('click', () => {
+        setNavActive('navNasdaq');
+        appState.filters.market = 'NASDAQ';
+        renderMainGrid();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    if (navYeongjae) navYeongjae.addEventListener('click', () => {
+        setNavActive('navYeongjae');
+        appState.filters.market = 'all';
+        appState.sortBy = 'score_desc';
+        renderMainGrid();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    if (navCalc) navCalc.addEventListener('click', () => {
+        setNavActive('navCalc');
+        document.getElementById('modalCalculator').classList.remove('hidden');
+        runSRimCalculator();
+    });
+
+    if (navSaved) navSaved.addEventListener('click', () => {
+        setNavActive('navSaved');
+        openSavedDrawer();
+    });
+
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -3546,8 +3594,21 @@ function initEventListeners() {
 
     const btnResetFilters = document.getElementById('btnResetFilters');
     const btnResetFiltersEmpty = document.getElementById('btnResetFiltersEmpty');
+    const btnToggleMobileFilter = document.getElementById('btnToggleMobileFilter');
+    const filterPanel = document.querySelector('.filter-panel');
+
     if (btnResetFilters) btnResetFilters.addEventListener('click', resetFilters);
     if (btnResetFiltersEmpty) btnResetFiltersEmpty.addEventListener('click', resetFilters);
+
+    if (btnToggleMobileFilter && filterPanel) {
+        btnToggleMobileFilter.addEventListener('click', () => {
+            filterPanel.classList.toggle('collapsed');
+            const isCollapsed = filterPanel.classList.contains('collapsed');
+            btnToggleMobileFilter.innerHTML = isCollapsed ? 
+                '<i class="fa-solid fa-chevron-down"></i> 필터 펼치기' : 
+                '<i class="fa-solid fa-chevron-up"></i> 필터 접기';
+        });
+    }
 
     const sortSelect = document.getElementById('sortSelect');
     if (sortSelect) {
@@ -3822,7 +3883,9 @@ function updateHeaderStats() {
 
 function updateSavedCount() {
     const savedCountElem = document.getElementById('savedCount');
+    const mobileSavedCountElem = document.getElementById('mobileSavedCount');
     if (savedCountElem) savedCountElem.textContent = appState.savedIds.length;
+    if (mobileSavedCountElem) mobileSavedCountElem.textContent = appState.savedIds.length;
 }
 
 function toggleSaveStock(id) {
@@ -4317,3 +4380,17 @@ function copyShareUrlToClipboard() {
         showToast('공유 링크: ' + url);
     }
 }
+
+// 🔴 Auto Live Stock Sync Engine (20초 주기 자동 실시간 시세 수신 및 UI 자동 반영)
+setInterval(() => {
+    fetch('/api/stocks')
+        .then(res => res.json())
+        .then(data => {
+            if (Array.isArray(data) && data.length > 0) {
+                appState.stocks = data;
+                updateHeaderStats();
+                renderMainGrid();
+            }
+        })
+        .catch(err => {});
+}, 20000);
