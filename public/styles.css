@@ -386,6 +386,7 @@ select, input[type="number"] {
   font-size: 0.74rem;
   width: 100%;
   box-sizing: border-box;
+  column-gap: 2px;
 }
 
 .sg-header {
@@ -401,6 +402,11 @@ select, input[type="number"] {
 }
 
 .sg-cell {
+  /* min-width: 0 is required so each row's grid tracks size purely from
+     grid-template-columns (not from each row's own content), otherwise
+     rows with longer text silently widen their own columns and the whole
+     table drifts out of vertical alignment row-to-row. */
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -413,6 +419,25 @@ select, input[type="number"] {
 .sg-cell.col-jeonse { text-align: right; }
 .sg-cell.col-change { text-align: right; font-weight: 700; }
 .sg-cell.col-rating { text-align: center; }
+
+/* Responsive tuning: keep the 6 columns perfectly aligned at every width,
+   just scale font/padding so nothing feels cramped or gets over-truncated. */
+@media (max-width: 380px) {
+  .sg-row {
+    grid-template-columns: 1.5fr 1fr 0.85fr 0.85fr 0.85fr 0.55fr;
+    font-size: 0.66rem;
+    padding: 7px 3px;
+  }
+  .sg-header { font-size: 0.64rem; }
+}
+
+@media (min-width: 481px) {
+  .sg-row {
+    font-size: 0.82rem;
+    padding: 10px 6px;
+  }
+  .sg-header { font-size: 0.78rem; }
+}
 
 /* Panels & Form Controls */
 .panel-card {
