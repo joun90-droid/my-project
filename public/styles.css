@@ -51,6 +51,19 @@ html, body {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
 }
 
+/* Tablet/desktop: grow the app card instead of leaving it pinned at phone
+   width, and let a few grids use the extra room with more columns. */
+@media (min-width: 640px) {
+  .smartphone-container { max-width: 640px; }
+}
+@media (min-width: 900px) {
+  .smartphone-container { max-width: 880px; }
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+  .form-grid { grid-template-columns: repeat(3, 1fr); }
+  .radio-tile-group { grid-template-columns: repeat(4, 1fr); }
+  .limit-comparison { grid-template-columns: repeat(4, 1fr); }
+}
+
 /* Header */
 .app-header {
   display: flex;
